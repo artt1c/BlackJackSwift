@@ -1,16 +1,16 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
-public enum Suit: String, Codable, CaseIterable {
+public enum Suit: String, Codable, CaseIterable, Sendable {
   case hearts, diamonds, clubs, spades
 }
 
-public enum Rank: Int, Codable, CaseIterable {
+public enum Rank: Int, Codable, CaseIterable, Sendable {
   case two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8, nine = 9, ten = 10
   case jack = 12, queen = 13, king = 14, ace = 11
 }
 
-public enum GameStatus: String, Codable {
+public enum GameStatus: String, Codable, Sendable {
   case waiting
   case playing
   case playerWon
@@ -19,7 +19,7 @@ public enum GameStatus: String, Codable {
   case bust
 }
 
-public struct Card: Codable {
+public struct Card: Codable, Sendable {
   public let suit: Suit
   public let rank: Rank
 
@@ -57,7 +57,7 @@ public extension [Card] {
   }
 }
 
-public struct GameState: Codable {
+public struct GameState: Codable, Sendable {
   public let playerHand: [Card]
   public let dealerHand: [Card]
   public let playerScore: Int
