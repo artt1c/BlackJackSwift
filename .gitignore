@@ -1,0 +1,31 @@
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Xcode
+# Build artifacts
+build/
+DerivedData/
+
+# User data
+xcuserdata/
+
+# Package manager
+.swiftpm/
+.build/
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# VS Code
+.vscode/
+
+# Docker / Server configuration
+.env
+.env.*
