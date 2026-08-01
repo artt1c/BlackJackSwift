@@ -19,6 +19,9 @@ enum Entrypoint {
     // app.logger.debug("Tried to install SwiftNIO's EventLoopGroup as Swift's global concurrency executor", metadata: ["success": .stringConvertible(executorTakeoverSuccess)])
 
     do {
+      let deck = Deck()
+      app.logger.info("Deck created: \(deck.getDeck())")
+
       try await configure(app)
       try await app.execute()
     } catch {

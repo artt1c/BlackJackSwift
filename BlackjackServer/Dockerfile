@@ -12,22 +12,24 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
 # Set up a build area
 WORKDIR /build
 
-# First just resolve dependencies.
-# This creates a cached layer that can be reused
-# as long as your Package.swift/Package.resolved
-# files do not change.
-COPY ./Package.* ./
+# First copy SharedModels and BlackjackServer package files to resolve dependencies.
+# This creates a cached layer that can be reused.
+COPY SharedModels ./SharedModels
+COPY BlackjackServer/Package.* ./BlackjackServer/
+WORKDIR /build/BlackjackServer
 RUN swift package resolve \
         $([ -f ./Package.resolved ] && echo "--force-resolved-versions" || true)
 
 # Copy entire repo into container
+WORKDIR /build
 COPY . .
 
 RUN mkdir /staging
 
 # Build the application, with optimizations, with static linking, and using jemalloc
 # N.B.: The static version of jemalloc is incompatible with the static Swift runtime.
-RUN --mount=type=cache,target=/build/.build \
+WORKDIR /build/BlackjackServer
+RUN --mount=type=cache,target=/build/BlackjackServer/.build \
     swift build -c release \
         --product BlackjackServer \
         --static-swift-stdlib \
@@ -46,8 +48,8 @@ RUN cp "/usr/libexec/swift/linux/swift-backtrace-static" ./
 
 # Copy any resources from the public directory and views directory if the directories exist
 # Ensure that by default, neither the directory nor any of its contents are writable.
-RUN [ -d /build/Public ] && { mv /build/Public ./Public && chmod -R a-w ./Public; } || true
-RUN [ -d /build/Resources ] && { mv /build/Resources ./Resources && chmod -R a-w ./Resources; } || true
+RUN [ -d /build/BlackjackServer/Public ] && { mv /build/BlackjackServer/Public ./Public && chmod -R a-w ./Public; } || true
+RUN [ -d /build/BlackjackServer/Resources ] && { mv /build/BlackjackServer/Resources ./Resources && chmod -R a-w ./Resources; } || true
 
 # ================================
 # Run image

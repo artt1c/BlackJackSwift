@@ -15,17 +15,12 @@ let package = Package(
   ],
   targets: [
     .executableTarget(
-      name: "App",
-      dependencies: [
-        .product(name: "SharedModels", package: "SharedModels"),
-      ]
-    ),
-    .executableTarget(
       name: "BlackjackServer",
       dependencies: [
         .product(name: "Vapor", package: "vapor"),
         .product(name: "NIOCore", package: "swift-nio"),
         .product(name: "NIOPosix", package: "swift-nio"),
+        .product(name: "SharedModels", package: "SharedModels"),
       ],
       swiftSettings: swiftSettings
     ),
