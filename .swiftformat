@@ -1,0 +1,14 @@
+# Indentation
+--indent 2
+
+# Exclude directories
+--exclude **/Pods,**/DerivedData,.build,.swiftpm
+
+# Swift version
+--swiftversion 6.0
+
+# Style rules
+--allman false
+--semicolons inline
+--commas always
+--trimwhitespace always

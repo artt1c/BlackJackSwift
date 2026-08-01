@@ -6,8 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		84EBEF55301E5C58001C60C9 /* SharedModels in Frameworks */ = {isa = PBXBuildFile; productRef = 84EBEF54301E5C58001C60C9 /* SharedModels */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		84EBEF3B301E548F001C60C9 /* BlacJackMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlacJackMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84EBEF3B301E548F001C60C9 /* BlacJackMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = BlacJackMobile.app; path = "/Users/admin/Documents/BlackJackSwift/BlacJackMobile/build/Debug-iphoneos/BlacJackMobile.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84EBEF55301E5C58001C60C9 /* SharedModels in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,16 +38,7 @@
 			isa = PBXGroup;
 			children = (
 				84EBEF3D301E548F001C60C9 /* BlacJackMobile */,
-				84EBEF3C301E548F001C60C9 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		84EBEF3C301E548F001C60C9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				84EBEF3B301E548F001C60C9 /* BlacJackMobile.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +61,7 @@
 			);
 			name = BlacJackMobile;
 			packageProductDependencies = (
+				84EBEF54301E5C58001C60C9 /* SharedModels */,
 			);
 			productName = BlacJackMobile;
 			productReference = 84EBEF3B301E548F001C60C9 /* BlacJackMobile.app */;
@@ -94,8 +91,11 @@
 			);
 			mainGroup = 84EBEF32301E548F001C60C9;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				84EBEF53301E5C58001C60C9 /* XCLocalSwiftPackageReference "../SharedModels" */,
+			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 84EBEF3C301E548F001C60C9 /* Products */;
+			productRefGroup = 84EBEF32301E548F001C60C9;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -328,6 +328,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		84EBEF53301E5C58001C60C9 /* XCLocalSwiftPackageReference "../SharedModels" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../SharedModels;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		84EBEF54301E5C58001C60C9 /* SharedModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedModels;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 84EBEF33301E548F001C60C9 /* Project object */;
 }
