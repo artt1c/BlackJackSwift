@@ -4,9 +4,68 @@ import SwiftUI
 @Observable
 @MainActor
 final class GameViewModel {
+  // MARK: - Published State Properties
+
   var gameState: GameState?
   var errorMessage: String?
   var isLoading = false
+
+  // MARK: - Computed Properties for View Binding
+
+  var isPlaying: Bool {
+    gameState?.status == .playing
+  }
+
+  var isGameOver: Bool {
+    guard let status = gameState?.status else { return false }
+    return status != .playing && status != .waiting
+  }
+
+  var dealerHand: [Card] {
+    gameState?.dealerHand ?? []
+  }
+
+  var playerHand: [Card] {
+    gameState?.playerHand ?? []
+  }
+
+  var dealerScore: Int {
+    gameState?.dealerScore ?? 0
+  }
+
+  var playerScore: Int {
+    gameState?.playerScore ?? 0
+  }
+
+  var displayedDealerScore: String {
+    guard let state = gameState else { return "0" }
+    if isGameOver {
+      return "\(state.dealerScore)"
+    } else {
+      if let firstCard = state.dealerHand.first {
+        return "\(firstCard.blackjackValue) + ?"
+      }
+      return "?"
+    }
+  }
+
+  var displayedPlayerScore: String {
+    "\(playerScore)"
+  }
+
+  var statusText: String {
+    gameState?.status.title ?? "Готово до гри"
+  }
+
+  var statusColor: Color {
+    gameState?.status.themeColor ?? .blue
+  }
+
+  var statusIcon: String {
+    gameState?.status.iconName ?? "info.circle.fill"
+  }
+
+  // MARK: - API Network Requests
 
   private func getURL() -> String {
     Bundle.main.object(forInfoDictionaryKey: "SERVER_URL") as? String ?? "http://localhost:8080"
@@ -14,7 +73,7 @@ final class GameViewModel {
 
   private func getUrl(path: String) -> URL {
     guard let url = URL(string: getURL() + path) else {
-      fatalError("Invalid URL")
+      fatalError("Invalid URL configuration")
     }
     return url
   }
@@ -32,6 +91,8 @@ final class GameViewModel {
 
     return try JSONDecoder().decode(T.self, from: data)
   }
+
+  // MARK: - User Intents & Actions
 
   func createRoom() async {
     isLoading = true
@@ -83,5 +144,13 @@ final class GameViewModel {
       errorMessage = error.localizedDescription
     }
     isLoading = false
+  }
+
+  // MARK: - Haptic Feedback Trigger
+
+  func triggerHaptic(_ style: UIImpactFeedbackGenerator.FeedbackStyle = .medium) {
+    let generator = UIImpactFeedbackGenerator(style: style)
+    generator.prepare()
+    generator.impactOccurred()
   }
 }
