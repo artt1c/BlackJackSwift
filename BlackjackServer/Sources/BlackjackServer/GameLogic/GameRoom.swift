@@ -1,3 +1,4 @@
+public import Foundation
 public import SharedModels
 
 public actor GameRoom {
@@ -86,7 +87,7 @@ public actor GameRoom {
     determineWinner()
   }
 
-  public func getGameState() -> GameState {
-    GameState(playerHand: playerHand, dealerHand: dealerHand, playerScore: playerScore, dealerScore: dealerScore, status: gameStatus)
+  public func getGameState(id: UUID) -> GameState {
+    GameState(id: id, playerHand: playerHand, dealerHand: dealerHand, playerScore: playerScore, dealerScore: dealerScore, status: gameStatus)
   }
 }

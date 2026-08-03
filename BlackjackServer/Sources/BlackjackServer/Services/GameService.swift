@@ -15,7 +15,7 @@ public actor GameService {
   }
 
   public func getGameState(id: UUID) async -> GameState? {
-    await rooms[id]?.getGameState()
+    await rooms[id]?.getGameState(id: id)
   }
 
   public func playerHit(id: UUID) async {

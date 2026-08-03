@@ -1,5 +1,6 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
+public import Foundation
 
 public enum Suit: String, Codable, CaseIterable, Sendable {
   case hearts, diamonds, clubs, spades
@@ -58,13 +59,15 @@ public extension [Card] {
 }
 
 public struct GameState: Codable, Sendable {
+  public let id: UUID
   public let playerHand: [Card]
   public let dealerHand: [Card]
   public let playerScore: Int
   public let dealerScore: Int
   public let status: GameStatus
 
-  public init(playerHand: [Card], dealerHand: [Card], playerScore: Int, dealerScore: Int, status: GameStatus) {
+  public init(id: UUID, playerHand: [Card], dealerHand: [Card], playerScore: Int, dealerScore: Int, status: GameStatus) {
+    self.id = id
     self.playerHand = playerHand
     self.dealerHand = dealerHand
     self.playerScore = playerScore
