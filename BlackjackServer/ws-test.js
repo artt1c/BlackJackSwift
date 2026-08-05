@@ -185,9 +185,12 @@ async function main() {
   const soloRoom = await createLobby("Соло гравець");
   const S = await makeClient(soloRoom.id, "Соло");
   check("solo welcome + alone", !!S.id && S.lastState?.players?.length === 1);
-  S.send({ type: "startRound" }); // S does NOT act -> round stays dealing
+  S.send({ type: "startRound" }); // deal starts; the round only auto-settles
+  // if S's initial two cards are a natural blackjack (~5% of shuffles), so the
+  // exact phase at this instant is not deterministic — assert the deal itself.
   await sleep(300);
-  check("solo round is dealing", S.lastState?.phase === "dealing",
+  check("solo round started (sole player dealt 2 cards)",
+    (S.lastState?.players?.[0]?.hand?.length ?? 0) === 2,
     `phase=${S.lastState?.phase ?? "none"}`);
   S.send({ type: "leave" }); // the only player walks away mid-round
   await sleep(300);

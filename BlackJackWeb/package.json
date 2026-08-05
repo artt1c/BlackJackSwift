@@ -1,0 +1,24 @@
+{
+  "name": "blackjack-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Browser client for the Blackjack multiplayer server (plays the same tables as the iOS app).",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "cards": "node scripts/copy-cards.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
+  }
+}
