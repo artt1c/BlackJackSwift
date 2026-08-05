@@ -23,11 +23,18 @@ public enum GameStatus: String, Codable, Sendable {
 public struct Card: Codable, Sendable {
   public let suit: Suit
   public let rank: Rank
+  /// True for the face-down placeholder the server sends for cards that must
+  /// stay hidden (opponents' hands and the dealer's hole) until the round ends.
+  public let isHidden: Bool
 
-  public init(suit: Suit, rank: Rank) {
+  public init(suit: Suit, rank: Rank, isHidden: Bool = false) {
     self.suit = suit
     self.rank = rank
+    self.isHidden = isHidden
   }
+
+  /// A face-down card placeholder with the same size as a real card.
+  public static let hidden = Card(suit: .spades, rank: .ace, isHidden: true)
 
   public var blackjackValue: Int {
     if rank == .ace {

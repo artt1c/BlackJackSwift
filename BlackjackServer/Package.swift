@@ -1,4 +1,4 @@
-// swift-tools-version:6.3
+// swift-tools-version:6.2
 import PackageDescription
 
 let package = Package(
@@ -20,6 +20,7 @@ let package = Package(
         .product(name: "Vapor", package: "vapor"),
         .product(name: "NIOCore", package: "swift-nio"),
         .product(name: "NIOPosix", package: "swift-nio"),
+        .product(name: "NIOConcurrencyHelpers", package: "swift-nio"),
         .product(name: "SharedModels", package: "SharedModels"),
       ],
       swiftSettings: swiftSettings

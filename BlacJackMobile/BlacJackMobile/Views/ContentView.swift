@@ -3,6 +3,7 @@ import SwiftUI
 
 struct ContentView: View {
   @State private var viewModel = GameViewModel()
+  @Environment(\.dismiss) private var dismiss
 
   var body: some View {
     ZStack {
@@ -10,10 +11,12 @@ struct ContentView: View {
       CasinoBackgroundView()
 
       VStack(spacing: 0) {
-        // 2. Header Bar
-        HeaderView()
-          .padding(.top, 10)
-          .padding(.horizontal)
+        // 2. Header Bar (with back button)
+        HeaderView {
+          dismiss()
+        }
+        .padding(.top, 10)
+        .padding(.horizontal)
 
         Spacer()
 
@@ -91,6 +94,8 @@ struct ContentView: View {
         .transition(.move(edge: .top).combined(with: .opacity))
       }
     }
+    .navigationBarBackButtonHidden(true)
+    .toolbar(.hidden, for: .navigationBar)
   }
 }
 

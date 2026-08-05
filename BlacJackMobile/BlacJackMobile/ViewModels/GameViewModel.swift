@@ -67,13 +67,20 @@ final class GameViewModel {
 
   // MARK: - API Network Requests
 
-  private func getURL() -> String {
-    Bundle.main.object(forInfoDictionaryKey: "SERVER_URL") as? String ?? "http://localhost:8080"
-  }
-
-  private func getUrl(path: String) -> URL {
-    guard let url = URL(string: getURL() + path) else {
-      fatalError("Invalid URL configuration")
+  private func getURL(path: String) -> URL {
+    let urlString: String
+    if let configURL = Bundle.main.object(forInfoDictionaryKey: "SERVER_URL") as? String {
+      urlString = configURL
+    } else {
+      #if DEBUG
+        urlString = "http://localhost:8080"
+      #else
+        urlString = ""
+      #endif
+    }
+    let fullURL = urlString + path
+    guard let url = URL(string: fullURL) else {
+      fatalError("Invalid URL configuration: \(fullURL)")
     }
     return url
   }
@@ -99,7 +106,7 @@ final class GameViewModel {
     errorMessage = nil
     do {
       struct CreateResponse: Decodable { let id: UUID }
-      let url = getUrl(path: "/game/new")
+      let url = getURL(path: "/game/new")
       let response: CreateResponse = try await performRequest(url, method: "POST")
       await getGameState(id: response.id)
     } catch {
@@ -113,7 +120,7 @@ final class GameViewModel {
     isLoading = true
     errorMessage = nil
     do {
-      let url = getUrl(path: "/game/\(id.uuidString)/hit")
+      let url = getURL(path: "/game/\(id.uuidString)/hit")
       gameState = try await performRequest(url, method: "POST")
     } catch {
       errorMessage = error.localizedDescription
@@ -126,7 +133,7 @@ final class GameViewModel {
     isLoading = true
     errorMessage = nil
     do {
-      let url = getUrl(path: "/game/\(id.uuidString)/stand")
+      let url = getURL(path: "/game/\(id.uuidString)/stand")
       gameState = try await performRequest(url, method: "POST")
     } catch {
       errorMessage = error.localizedDescription
@@ -138,7 +145,7 @@ final class GameViewModel {
     isLoading = true
     errorMessage = nil
     do {
-      let url = getUrl(path: "/game/\(id.uuidString)")
+      let url = getURL(path: "/game/\(id.uuidString)")
       gameState = try await performRequest(url, method: "GET")
     } catch {
       errorMessage = error.localizedDescription

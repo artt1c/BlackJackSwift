@@ -7,4 +7,9 @@ func configure(_ app: Application) async throws {
 
   // register routes
   try routes(app)
+
+  // multiplayer lobbies: REST list/create + per-lobby WebSocket
+  let lobbyManager = LobbyManager()
+  try app.register(collection: LobbyController(lobbyManager: lobbyManager))
+  LobbyWebSocketController(lobbyManager: lobbyManager).register(on: app)
 }
